@@ -5,16 +5,17 @@ $documents_dir = null;
 
 if (file_exists('config.php')) {
   require('config.php');
-  
-  if (empty($documents_dir)) {
+  $config = new Config();
+
+  if (empty($config->documents_dir)) {
     $problems[] = 'empty_documents_dir';
   }
   
-  if (!file_exists($documents_dir)) {
+  if (!file_exists($config->documents_dir)) {
     $problems[] = 'documents_folder_not_found';
   }
   
-  if (!is_writable($documents_dir)) {
+  if (!is_writable($config->documents_dir)) {
     $problems[]  = 'documents_not_writable';
   }
 

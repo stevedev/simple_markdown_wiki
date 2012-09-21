@@ -1,12 +1,16 @@
 <?php
 
 include('config.php');
+include('lib.php');
+$config = new Config();
+
+verify_edit_access($config->allowed_edit_ips);
 
 $filename = ltrim($_SERVER['PATH_INFO'], '/');
 $file = str_replace('/', '_', str_replace('.html', '.mdown', $filename));
 
-if (file_exists($documents_dir . $file)) {
-  $text = file_get_contents($documents_dir . $file);
+if (file_exists($config->documents_dir . $file)) {
+  $text = file_get_contents($config->documents_dir . $file);
 } else {
   $text = '';
 }

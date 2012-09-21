@@ -1,29 +1,35 @@
 <?php
 
-include('markdown.php');
-include('config.php');
+require('lib.php');
+require('markdown.php');
 
-if (in_array($_SERVER['REMOTE_ADDR'], $allowed_ips)) {
-  $admin = true;
-} else { 
-  $admin = false;
+// Make sure config exists. 
+if (!file_exists('config.php')) {
+  redirect('install.php');
 }
+
+require('config.php');
+$config = new Config();
+
 
 // Check if documents dir exists
-if (!file_exists($documents_dir)) {
-  header('location:install.php');
-  exit();
+if (!file_exists($config->documents_dir)) {
+  redirect('install.php');
 }
+
+verify_read_access($config->ip_whitelist);
+$editor = verify_edit_access($config->allowed_edit_ips);
+
 
 $filename = !empty($_GET['f']) ? $_GET['f'] : 'index.html';
 $file = str_replace('/', '_', str_replace('.html', '.mdown', $filename));
 
-if (file_exists($documents_dir . $file)) {
-  $text = file_get_contents($documents_dir . $file);
+if (file_exists($config->documents_dir . $file)) {
+  $text = file_get_contents($config->documents_dir . $file);
   $html = Markdown($text);
   $title = ucwords(str_replace("_", " ", str_replace(".mdown", "", $file)));
-  $editable = $admin;
-} elseif ($admin) {
+  $editable = $editor;
+} elseif ($editor) {
   $html = "<p>File does not yet exist. <a href=\"/edit/{$file}\">Create it.</a> </p>";
   $editable = false;
 } else {
