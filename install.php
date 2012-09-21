@@ -25,7 +25,7 @@ if (file_exists('config.php')) {
 ?><!DOCTYPE html>
 <html lang="en">
   <head>
-    <title><?= $title ?></title>
+    <title>Install</title>
     <link rel="stylesheet" href="/document.css" type="text/css" media="screen" title="no title" charset="utf-8">
   </head>
   <body>
