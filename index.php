@@ -42,22 +42,21 @@ if (file_exists($config->documents_dir . $file)) {
 <html lang="en">
   <head>
     <title><?= $title ?></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/document.css" type="text/css" media="screen" title="no title" charset="utf-8">
   </head>
-  <body>
+  <body>    
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a href="/" class="brand pull-left">docs.stevedev.com/<b><?= $filename ?></b></a>
+
+          <?php if ($editable) : ?><a href="/edit/<?= $filename ?>" class="btn pull-right ">Edit</a><?php endif?>
+        </div>
+      </div>
+    </div>
     
     <div class="container-fluid">
-      
-      <div class="row-fluid">
-        <div class="span9">
-          /<a href="/">docs.stevedev.com</a>/<?= $filename ?>
-        </div>
-        <p class="span3" style="text-align: right">
-          <?php if ($editable) : ?>
-            <a href="/edit/<?= $filename ?>" class="btn">Edit Document</a>
-          <?php endif?>
-        </p>
-      </div>
       <div class="row-fluid">
         <?= stripslashes($html) ?>
       </div>

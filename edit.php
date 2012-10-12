@@ -25,27 +25,29 @@ $cancel_link = str_replace('edit', '', $filename);
     <link rel="stylesheet" href="/document.css" type="text/css" media="screen" title="no title" charset="utf-8">
   </head>
   <body>
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a href="/" class="brand">docs.stevedev.com/<b><?= $filename ?></b></a>
+          <div class="pull-right btn-group">
+           <a href="javascript:document.getElementById('edit_form').submit()" class="btn btn-primary">Save</a>
+            <a href="/<?= $cancel_link ?>" class="btn">Cancel</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="container-fluid">
-      
         <form action="/save.php" method="post" id="edit_form">
           <input type="hidden" name="filename" value="<?= $filename ?>">
           <input type="hidden" name="file" value="<?= $file ?>">
-          <div class="row-fluid">
-            <p class="span6">Editing /<em><?= $cancel_link ?></em></p>
-            <p class="span6" style="text-align: right">
-              <a href="javascript:document.getElementById('edit_form').submit()" class="btn btn-primary">Save Document</a>
-              <a href="/<?= $cancel_link ?>" class="btn">Cancel</a>
-            </p>
 
           <div class="row-fluid">
-            <div class="span12">
-              <textarea rows="40" style="width: 100%" name="content"><?= stripslashes($text) ?></textarea>
-              <p align="right">
-                <a href="http://daringfireball.net/projects/markdown/dingus" target="_blank">Use Markdown</a>
-              </p>
-            </div>
+            <textarea rows="40" name="content" class="span12"><?= stripslashes($text) ?></textarea>
+            <p class="pull-right">
+              Tip: <a href="http://daringfireball.net/projects/markdown/dingus" target="_blank">Use Markdown</a>
+            </p>
           </div>
-          
         </form>
       </div>
     </div>
